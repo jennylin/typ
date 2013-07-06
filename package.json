@@ -1,0 +1,12 @@
+{
+  "name": "typ",
+  "version": "0.0.0",
+  "description": "Thank you partner!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "robobuddy",
+  "license": "BSD"
+}
