@@ -6,6 +6,15 @@ hearts.on('init', function() {
   this.players = Player.create(4);
   this.setPlayDirection('clockwise');
   this.transition('newDeal');
+  this.trick = new Trick({trump:false});
+  this.trick.on('card', function(card) {
+    if (card.heart) {
+      hearts.heartsBroken = true;
+    }
+  })
+  this.trick.validLead(function(card) {
+    return hearts.heartsBroken ? true : !card.heart;
+  })
 });
 
 hearts.on('newDeal', function() {
@@ -17,14 +26,44 @@ hearts.on('newDeal', function() {
 });
 
 hearts.on('passCards', function() {
-  this.passCards({count: 3, offset: this.direction, function() {
-    this.setLead('2C');
+  this.players.passCards({count: 3, offset: this.direction, function() {
+    this.setLead(this.players.findWithCard('2C'));
     this.transition('playTrick');
   });
 });
 
 hearts.on('playTrick', function() {
-  this.loopPlayers().endsOn(function(loop) {
-    return loop.count == 4;
-  });
+  var game = this;
+  this.trick.play(this.players, function() {
+    game.setLead(this.taker);
+    if (this.taker.hand.length == 0) {
+      game.transition('score')
+    } else {
+      game.transition('playTrick');
+    }
+  })
 });
+
+hearts.on('score', function() {
+  this.players.score(function() {
+    return this.tricks.findBySuit("h").length + (this.tricks.card('QS') != null ? 13 : 0)
+  })
+  var controller = this.players.find(function() {
+    return this.score == 26;
+  })
+  if (controller) {
+    this.players.score(function() {
+      if (this == controller) {
+        this.score = 0;
+      } else {
+        this.score = 26;
+      }
+    })
+  }
+  hearts.score(this.players);
+  if (this.players.find(function() { return this.totalScore > 100 })) {
+    game.end()
+  } else {
+    game.transition('newDeal')
+  }
+})
