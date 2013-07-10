@@ -1,4 +1,6 @@
-var hearts = new Game();
+var typ = require('./index')
+
+var hearts = new typ.Game();
 
 hearts.on('init', function() {
   // decks you can pass in includes and excludes
@@ -26,7 +28,7 @@ hearts.on('newDeal', function() {
 });
 
 hearts.on('passCards', function() {
-  this.players.passCards({count: 3, offset: this.direction, function() {
+  this.players.passCards({count: 3, offset: this.direction}, function() {
     this.setLead(this.players.findWithCard('2C'));
     this.transition('playTrick');
   });
@@ -67,3 +69,5 @@ hearts.on('score', function() {
     game.transition('newDeal')
   }
 })
+
+hearts.start()
