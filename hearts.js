@@ -23,12 +23,12 @@ hearts.on('newDeal', function() {
   this.deck.shuffle();
   this.deck.deal(this.players, 13);
   // some games might care about number of cards players can look at that were dealt to them vs hidden at the start
-  this.direction = (this.transitionCount('newDeal') + 1) % 4;
+  this.passDirection = (this.transitionCount('newDeal') + 1) % 4;
   this.transition('passCards');
 });
 
 hearts.on('passCards', function() {
-  this.players.passCards({count: 3, offset: this.direction}, function() {
+  this.players.passCards({count: 3, offset: this.passDirection}, function() {
     this.setLead(this.players.findWithCard('2C'));
     this.transition('playTrick');
   });
