@@ -4,11 +4,10 @@ var hearts = new typ.Game();
 
 hearts.on('init', function() {
   // decks you can pass in includes and excludes
-  this.deck = new Deck();
-  this.players = Player.create(4);
+  this.deck = new typ.Deck(hearts);
+  this.players = typ.Players.create(hearts, 4);
   this.setPlayDirection('clockwise');
-  this.transition('newDeal');
-  this.trick = new Trick({trump:false});
+  this.trick = new typ.Trick({trump:false});
   this.trick.on('card', function(card) {
     if (card.heart) {
       hearts.heartsBroken = true;
@@ -17,7 +16,8 @@ hearts.on('init', function() {
   this.trick.validLead(function(card) {
     return hearts.heartsBroken ? true : !card.heart;
   })
-});
+  this.transition('newDeal');
+})
 
 hearts.on('newDeal', function() {
   this.deck.shuffle();
@@ -68,6 +68,9 @@ hearts.on('score', function() {
   } else {
     game.transition('newDeal')
   }
-})
+});
 
-hearts.start()
+hearts.makeMoves([
+], function(game) {
+  console.dir(game);
+});

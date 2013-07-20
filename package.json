@@ -8,5 +8,9 @@
   },
   "repository": "",
   "author": "robobuddy",
-  "license": "BSD"
+  "license": "BSD",
+  "dependencies": {
+    "seed-random": "1.0.1",
+    "underscore": "1.5.1"
+  }
 }
