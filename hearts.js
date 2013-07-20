@@ -1,6 +1,6 @@
 var typ = require('./index')
 
-var hearts = new typ.Game();
+var hearts = new typ.Game("hearts");
 
 hearts.on('init', function() {
   // decks you can pass in includes and excludes
@@ -70,7 +70,5 @@ hearts.on('score', function() {
   }
 });
 
-hearts.makeMoves([
-], function(game) {
-  console.dir(game);
-});
+var server = new typ.HttpServer(hearts)
+server.start();

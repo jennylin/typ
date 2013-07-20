@@ -1,7 +1,8 @@
 var fs = require('fs')
   , EventEmitter = require('events').EventEmitter
   , seed = require('seed-random')
-  , _ = require('underscore');
+  , _ = require('underscore')
+  , express = require('express');
 
 var Card = exports.Card = function(suit, rank, label) {
   this.suit = suit;
@@ -61,10 +62,6 @@ Player.prototype.receiveCards = function(cards) {
   console.log("player "+this.id+" has "+JSON.stringify(this.hand));
 }
 
-Player.prototype.passCards = function(opts, cb) {
-
-}
-
 var Players = exports.Players = function(game) {
   this.game = game;
   this.players = [];
@@ -77,7 +74,15 @@ Players.prototype.push = function(player) {
 
 Players.prototype.get = function(index) {
   console.log('index '+index)
-  return this.players[index];
+  return this.players[index % this.players.length];
+}
+
+Players.prototype.passCards = function(opts, cb) {
+
+}
+
+Players.prototype.forEach = function(cb) {
+  this.players.forEach(cb);
 }
 
 Players.create = function(game, num) {
@@ -88,9 +93,10 @@ Players.create = function(game, num) {
   return players;
 }
 
-var Game = exports.Game = function() {
-  this.state = 'init';
+var Game = exports.Game = function(name) {
+  this.name = name;
   this.states = {};
+  this.transcript = [];
   this.moves = [];
   this.pendingMoves = [];
   this.transitionCounters = {};
@@ -121,9 +127,8 @@ Game.prototype.makeMoves = function(moves, callback) {
   this.play(callback);
 }
 
-Game.prototype.play = function(callback) {
-  this.playCallback = callback;
-  this.runCurrentState();
+Game.prototype.play = function() {
+  this.transition('init');
 }
 
 Game.prototype.transitionCount = function(state) {
@@ -131,7 +136,6 @@ Game.prototype.transitionCount = function(state) {
 }
 
 Game.prototype.runCurrentState = function() {
-  this.emit('stateChange', this.state);
   if (this.transitionCounters[this.state] === undefined) this.transitionCounters[this.state] = 0;
   this.transitionCounters[this.state]++;
   this.states[this.state].bind(this).call();
@@ -142,8 +146,28 @@ Game.prototype.setPlayDirection = function(direction) {
 }
 
 Game.prototype.transition = function(newState) {
+  this.transcript.push("state changed from "+this.state+" to "+newState);
   this.state = newState;
   this.runCurrentState();
+}
+
+var HttpServer = exports.HttpServer = function(game) {
+  this.game = game;
+  this.app = express();
+  this.app.use(express.bodyParser());
+  this.app.set('view engine', 'ejs');
+  this.app.get('/', function(req, res) {
+    res.render('index', { game: game });
+  });
+  this.app.post('/players/:id/moves', function(req, res) {
+    var result = game.players.get(parseInt(req.params.id).makeMove(req.body.move));
+    res.render('index', { game: game });
+  });
+}
+
+HttpServer.prototype.start = function() {
+  this.game.play();
+  this.app.listen(4333);
 }
 
 Game.prototype.__proto__ = EventEmitter.prototype;

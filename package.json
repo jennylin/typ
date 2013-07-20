@@ -11,6 +11,8 @@
   "license": "BSD",
   "dependencies": {
     "seed-random": "1.0.1",
-    "underscore": "1.5.1"
+    "underscore": "1.5.1",
+    "express": "3.3.4",
+    "ejs": "*"
   }
 }

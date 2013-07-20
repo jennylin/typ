@@ -1,0 +1,49 @@
+<h1>Game <%= game.name %></h1>
+
+<h2>Moves</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Player id</th><th>Move</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% game.moves.forEach(function(move) { %>
+      <tr>
+        <td><%= move.playerId %></td>
+        <td><%= move.action %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<h2>Transcript</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% game.transcript.forEach(function(t) { %>
+      <tr>
+        <td><%= t %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<h2>Players</h2>
+
+<% game.players.forEach(function(player) { %>
+  <h3>Player <%=player.id%></h3>
+
+  <p>Hand: <%= JSON.stringify(player.hand) %></p>
+
+  <form action="/players/<%=player.id%>/moves" method="POST">
+    <input name="move"><input type="submit">
+  </form>
+<% }) %>
+
