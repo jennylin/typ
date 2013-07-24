@@ -4,6 +4,46 @@ var fs = require('fs')
   , _ = require('underscore')
   , express = require('express');
 
+function Question(name, playerId, answers) {
+  this.name = name;
+  this.playerId = playerId;
+  this.answers = answers;
+}
+
+Question.prototype.answered = function() {
+  return this.answer !== undefined;
+}
+
+Question.prototype.process = function() {
+  return true;
+}
+
+Question.prototype.answerWith= function(playerId, answer) {
+  if (this.answered()) throw "question already answered";
+  if (this.playerId == playerId) {
+    if (this.answers.index(answer) != -1) {
+      throw "answer "+answer+" not found";
+    }
+    this.answer = answer;
+    return this.process();
+  } else {
+    throw "wrong playerId, got "+playerId+" expected"+this.playerId;
+  }
+}
+
+function QuestionList() {
+  this.questions = [];
+}
+
+QuestionList.prototype.processAnswer = function(playerId, answer) {
+  for (var i = 0; i != this.questions.length; i++) {
+    var answer = this.questions[i];
+    if (!answer.answered()) answer.answerWith(playerId, answer);
+  }
+  // loop done, lets talk
+  throw "sorry, no answer "+answer+" for player "+playerId+" expected";
+}
+
 var Card = exports.Card = function(suit, rank, label) {
   this.suit = suit;
   this.rank = rank;
