@@ -4,6 +4,16 @@ var fs = require('fs')
   , _ = require('underscore')
   , express = require('express');
 
+function Event(type, body, recipients) {
+  this.type = type;
+  this.body = body;
+  this.recipients = recipients;
+}
+
+Event.prototype.allowedFor = function(playerId) {
+  return this.recipients === undefined || this.recipients.indexOf(playerId) != -1;
+}
+
 function Question(name, playerId, answers) {
   this.name = name;
   this.playerId = playerId;
@@ -18,7 +28,7 @@ Question.prototype.process = function() {
   return true;
 }
 
-Question.prototype.answerWith= function(playerId, answer) {
+Question.prototype.answerWith = function(playerId, answer) {
   if (this.answered()) throw "question already answered";
   if (this.playerId == playerId) {
     if (this.answers.index(answer) != -1) {
@@ -135,8 +145,10 @@ Players.create = function(game, num) {
 
 var Game = exports.Game = function(name) {
   this.name = name;
+  this.eventId = 0;
   this.states = {};
   this.transcript = [];
+  this.events = [];
   this.moves = [];
   this.pendingMoves = [];
   this.transitionCounters = {};
@@ -186,23 +198,64 @@ Game.prototype.setPlayDirection = function(direction) {
 }
 
 Game.prototype.transition = function(newState) {
-  this.transcript.push("state changed from "+this.state+" to "+newState);
+  console.log("transitioning to "+newState)
+  this.send('information', {id: this.eventId++, type: 'state', body: {from: this.state, to: newState}});
   this.state = newState;
   this.runCurrentState();
 }
 
+Game.prototype.send = function(type, body) {
+  var evt = new Event(type, body);
+  evt.id = this.events.length;
+  this.events.push(evt);
+  this.emit(type, evt)
+}
+
 var HttpServer = exports.HttpServer = function(game) {
+  var server = this;
   this.game = game;
   this.app = express();
   this.app.use(express.bodyParser());
+  this.app.use(function(req, res, next){
+    console.log('%s %s', req.method, req.url);
+    next();
+  });
   this.app.set('view engine', 'ejs');
-  this.app.get('/', function(req, res) {
+  this.app.get('/games', function(req, res) {
     res.render('index', { game: game });
   });
   this.app.post('/players/:id/moves', function(req, res) {
-    var result = game.players.get(parseInt(req.params.id).makeMove(req.body.move));
-    res.render('index', { game: game });
+    if (game.players.get(parseInt(req.params.id)).makeMove(req.body.move)) {
+      res.send(201);
+    } else {
+      res.send(400);
+    }
   });
+  this.app.get('/players/:id/moves', function(req, res) {
+    res.writeHead(200, {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive'
+    });
+    for (var eventIndex = 0; eventIndex != game.events.length; eventIndex++) {
+      var evt = game.events[eventIndex];
+      if (evt.allowedFor(parseInt(req.params.id))) {
+        res.write(server.convertEventToServerSent(evt));
+      }
+    }
+    game.on('events', function(evt) {
+      if (evt.allowedFor(parseInt(req.params.id))) {
+        res.write(server.convertEventToServerSent(evt));
+      }
+    });
+  });
+}
+
+// /games/:id
+// /games/:id/players/:player_id
+
+HttpServer.prototype.convertEventToServerSent = function(evt) {
+  return "id: "+evt.id+"\ntype: "+evt.type+"\ndata: "+JSON.stringify(evt.body)+"\n\n";
 }
 
 HttpServer.prototype.start = function() {
