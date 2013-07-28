@@ -1,15 +1,13 @@
-<h1>Game <%= game.name %></h1>
+<h1>Games available</h1>
 
-<script>
-  if (!!window.EventSource) {
-    var source = new EventSource('/players/1/moves');
-    //source.addEventListener('information', function(e) {
-    //  console.dir(e)
-    //})
-    source.addEventListener('message', function(message) {
-      console.dir(message);
-    });
-  } else {
-    // Result to xhr polling :(
-  }
-</script>
+<dl>
+<% _.each(games, function(game, id) { %>
+  <dt>Game #<%= id %> (<%= game.name %>)</dt>
+  <dd>
+    <% _.times(game.players.length, function(n) { %>
+      <a href="/games/<%= id %>/players/<%= n+1 %>">Player <%= n+1 %></a><br>
+    <% }) %>
+  </dd>
+<% }) %>
+
+</ul>

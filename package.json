@@ -4,15 +4,21 @@
   "description": "Thank you partner!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "./node_modules/.bin/nf --port=4333 start"
   },
   "repository": "",
   "author": "robobuddy",
   "license": "BSD",
   "dependencies": {
+    "hiredis": "*",
+    "redis": "*",
     "seed-random": "1.0.1",
+    "express-partials": "0.1.1",
     "underscore": "1.5.1",
     "express": "3.3.4",
-    "ejs": "*"
+    "ejs": "*",
+    "knex": "0.1.x",
+    "pg": "*",
+    "foreman": "0.0.25"
   }
 }
