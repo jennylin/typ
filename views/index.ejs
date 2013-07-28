@@ -1,8 +1,8 @@
 <h1>Games available</h1>
 
 <dl>
-<% _.each(games, function(game, id) { %>
-  <dt>Game #<%= id %> (<%= game.name %>)</dt>
+<% _.each(list, function(game) { %>
+  <dt>Game #<%= game.id %> (<%= game.name %>)</dt>
   <dd>
     <% _.times(game.players.length, function(n) { %>
       <a href="/games/<%= id %>/players/<%= n+1 %>">Player <%= n+1 %></a><br>

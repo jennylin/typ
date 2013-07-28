@@ -7,10 +7,12 @@ CREATE TABLE games (
 CREATE TABLE moves (
   id bigserial primary key,
   game_id bigint NOT NULL,
-  player_id bigint NOT NULL
+  player_id bigint NOT NULL,
+  action varchar(200),
+  created_at timestamp default now()
 );
 
-CREATE UNIQUE INDEX moves_game_index ON moves (game_id);
+CREATE INDEX moves_game_index ON moves (game_id);
 
 CREATE TABLE players (
   id bigserial primary key,
@@ -20,9 +22,13 @@ CREATE TABLE players (
 );
 
 CREATE UNIQUE INDEX players_game_user_index ON players (game_id, user_id);
+CREATE UNIQUE INDEX players_game_position ON players (position);
 
 CREATE TABLE users (
   id bigserial primary key,
   name varchar(200) NOT NULL,
-  password varchar(200) NOT NULL
+  password varchar(200) NOT NULL,
+  human boolean default FALSE
 );
+
+CREATE UNIQUE INDEX users_name ON users (name);
