@@ -1,8 +1,11 @@
 CREATE TABLE games (
   id bigserial primary key,
+  name varchar(200),
   finished boolean default FALSE,
   created_at timestamp default now()
 );
+
+CREATE INDEX games_finished ON games (finished);
 
 CREATE TABLE moves (
   id bigserial primary key,
