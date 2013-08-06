@@ -6,7 +6,7 @@
 <script>
   $(document).ready(function() {
     if (window.EventSource !== undefined) {
-      var source = new EventSource('/players/1/moves');
+      var source = new EventSource('/games/<%= game.id %>/moves');
       source.addEventListener('information', function(message) {
         var div = $('<div/>');
         div.addClass(message.type);
