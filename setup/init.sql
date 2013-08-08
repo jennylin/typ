@@ -2,6 +2,7 @@ CREATE TABLE games (
   id bigserial primary key,
   name varchar(200),
   -- seed varchar(200), # we need a random seed being stored too
+  user_id bigint NOT NULL,
   finished boolean default FALSE,
   created_at timestamp default now()
 );
