@@ -1,0 +1,18 @@
+<h1>Games
+
+<h2>In progress</h2>
+
+<dl>
+<% list.forEach(function(game) { %>
+  <dt>Game #<%= game.id %> (<%= game.name %>)</dt>
+  <dd>
+    <% players.forEach(function(player) { %>
+      <a href="/games/<%= game.id %>/players/<%= player.id %>">Player: <%= player.name %></a><br>
+    <% }) %>
+  </dd>
+<% }) %>
+</dl>
+
+<h2>Create new game</h2>
+
+<form action="/games" method="post"><input type="hidden" name="name" value="hearts"><input type="submit" value="Create hearts game" class="btn"></form>
