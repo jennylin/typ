@@ -1,3 +1,8 @@
+DROP TABLE games;
+DROP TABLE moves;
+DROP TABLE players;
+DROP TABLE users;
+
 CREATE TABLE games (
   id bigserial primary key,
   name varchar(200),
@@ -27,7 +32,7 @@ CREATE TABLE players (
 );
 
 CREATE UNIQUE INDEX players_game_user ON players (game_id, user_id);
-CREATE UNIQUE INDEX players_game_game_position ON players (game_id, position);
+CREATE UNIQUE INDEX players_game_position ON players (game_id, position);
 
 CREATE TABLE users (
   id bigserial primary key,
