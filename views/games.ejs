@@ -2,16 +2,11 @@
 
 <h2>In progress</h2>
 
-<dl>
+<ul>
 <% list.forEach(function(game) { %>
-  <dt>Game #<%= game.id %> (<%= game.name %>)</dt>
-  <dd>
-    <% players.forEach(function(player) { %>
-      <a href="/games/<%= game.id %>/players/<%= player.id %>">Player: <%= player.name %></a><br>
-    <% }) %>
-  </dd>
+  <li>Game <a href="/games/<%= game.id %>">#<%= game.id %></a> (<%= game.name %>)</li>
 <% }) %>
-</dl>
+</ul>
 
 <h2>Create new game</h2>
 
