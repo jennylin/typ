@@ -28,7 +28,7 @@ CREATE TABLE players (
   id bigserial primary key,
   game_id bigint NOT NULL,
   user_id bigint NOT NULL,
-  position int
+  position int NOT NULL
 );
 
 CREATE UNIQUE INDEX players_game_user ON players (game_id, user_id);

@@ -1,0 +1,12 @@
+<h1>Game #<%= game.id %> <%= game.name %> is ready to join!</h1>
+
+<form action="/games/<%= game.id %>/join" method="POST">
+<ul>
+  <% for (var i=0; i != game.playerCount; i++) { %>
+    <% if (game.players[i]) { %>
+      <li>Position <%= i + 1 %> occupied by player <%=game.players[i].name %></li>
+    <% } else { %>
+      <li>Position <%= i + 1 %> is empty <button type="submit" name="position" value="<%=i%>">Join</button></li>
+    <% } %>
+  <% } %>
+</ul>
