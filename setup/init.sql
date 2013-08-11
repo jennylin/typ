@@ -37,8 +37,12 @@ CREATE UNIQUE INDEX players_game_position ON players (game_id, position);
 CREATE TABLE users (
   id bigserial primary key,
   name varchar(200) NOT NULL,
-  password varchar(200) NOT NULL,
+  facebook_id varchar(200),
+  twitter_id varchar(200),
+  password varchar(200),
+  profile_image_url varchar(200),
   human boolean default FALSE
 );
+
 
 CREATE UNIQUE INDEX users_name ON users (name);
