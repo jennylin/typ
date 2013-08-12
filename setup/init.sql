@@ -46,3 +46,15 @@ CREATE TABLE users (
 
 
 CREATE UNIQUE INDEX users_name ON users (name);
+
+INSERT INTO users (id, name) VALUES (1, 'josh');
+INSERT INTO users (id, name) VALUES (2, 'jen');
+INSERT INTO users (id, name) VALUES (3, 'phuc');
+INSERT INTO users (id, name) VALUES (4, 'gabe');
+
+INSERT INTO games (id, name, user_id) VALUES (1, 'hearts', 1);
+
+INSERT INTO players (game_id, user_id, position) VALUES (1, 1, 0);
+INSERT INTO players (game_id, user_id, position) VALUES (1, 2, 1);
+INSERT INTO players (game_id, user_id, position) VALUES (1, 3, 2);
+INSERT INTO players (game_id, user_id, position) VALUES (1, 4, 3);

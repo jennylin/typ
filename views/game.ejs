@@ -16,8 +16,18 @@
       source.addEventListener('question', function(message) {
         var div = $('<div/>');
         div.addClass(message.type);
-        div.html(message.data);
+        var body = JSON.parse(message.data);
+
+        switch(body.type) {
+          case "multiple":
+            div.html('multiple!');
+            break;
+          default:
+            div.html('something strange!');
+            break;
+        }
         $('#transcript').append(div);
+
       });
     } else {
       alert('fat chance homer')
