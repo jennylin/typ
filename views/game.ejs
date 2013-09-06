@@ -4,6 +4,19 @@
 </div>
 
 <script>
+  function submitAnswer(question, answers) {
+    if (answers.length < question.min) {
+      alert("You need to at least "+question.min+" answers");
+      return;
+    } else if(answers.length > question.max) {
+      alert("You need to as most "+question.max+" answers");
+      return;
+    }
+    $.post('/games/<%= game.id %>/moves', {id: question.id, answer: JSON.stringify(answers)}).always(function() {
+      console.log("all done");
+    })
+  }
+
   $(document).ready(function() {
     if (window.EventSource !== undefined) {
       var source = new EventSource('/games/<%= game.id %>/moves');
@@ -20,7 +33,21 @@
 
         switch(body.type) {
           case "multiple":
-            div.html('multiple!');
+            console.dir(body)
+            for (var i = 0; i != body.answers.length; i++) {
+              var answer = body.answers[i];
+              var checkbox = $('<input/>').attr('type', 'checkbox').attr('value', answer.id);
+              var label = $('<label/>');
+              var span = $('<span/>');
+              span.html(answer.id)
+              div.append(label.append(checkbox).append(span));
+            }
+            var button = $('<button/>').html(body.label);
+            div.append(button);
+            button.on('click', function() {
+              var answers = _.map(div.find(':checked'), function(el) { return $(el).attr('value') });
+              submitAnswer(body, answers);
+            });
             break;
           default:
             div.html('something strange!');

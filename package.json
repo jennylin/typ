@@ -4,7 +4,7 @@
   "description": "Thank you partner!",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/nf --port=4333 start"
+    "start": "./node_modules/.bin/nf --port=4333 start -w"
   },
   "repository": "",
   "author": "robobuddy",

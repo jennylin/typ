@@ -17,8 +17,9 @@ CREATE INDEX games_finished ON games (finished);
 CREATE TABLE moves (
   id bigserial primary key,
   game_id bigint NOT NULL,
+  question_id bigint NOT NULL,
   position int NOT NULL,
-  action varchar(200),
+  action json,
   created_at timestamp default now()
 );
 
