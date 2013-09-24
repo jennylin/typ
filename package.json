@@ -23,6 +23,7 @@
     "password-hash": "1.2.1",
     "passport": "0.1.17",
     "passport-facebook": "0.1.5",
-    "passport-twitter": "0.1.5"
+    "passport-twitter": "0.1.5",
+    "jasmine-node": "*"
   }
 }
