@@ -1,0 +1,20 @@
+{
+  "name": "TYP Client",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jennylin/typ",
+  "authors": [
+    "Andrew Hull <aghull@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootbox": "~4.0.0"
+  }
+}
