@@ -2,78 +2,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+<link rel="stylesheet" href="hearts.css"/>
 
 <script src="../node_modules/underscore/underscore.js"></script>
-<script src="../node_modules/q/q.js"></script>
 <script src="../node_modules/inflection/lib/inflection.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="bower_components/bootbox/bootbox.js"></script>
+<script src="bower_components/jquery/jquery.min.js"></script>
 
 <script src="../lib/engine/game.js"></script>
-
 <script src="../lib/games/hearts2.js"></script>
-
+<script src="main.js"></script>
 <script>
-$(function() {
-  hearts.dom = $('#board');
-  hearts.become('start');
-});
+  $(function() {
+    client = new GameClient(hearts, $('#board'), $('#questions'));
+    hearts.start();
+  });
 </script>
 
-<style>
-/* placeholder styles for basic elements */
-#board .player {
-  display: block;
-}
-#board .space {
-  display: block;
-  margin-left: 20px;
-}
-#board .space > .name {
-  display: inline-block;
-  width: 120px;
-}
-#board .space > .name:after {
-  content: ':';
-}
-#board .piece {
-  display: inline-block;
-  padding: 0 3px;
-}
-
-/* adjust temporary bootstrap dialog */
-.modal-dialog {
-  float: right;
-}
-.modal-backdrop.in {
-  display: none;
-}
-
-/* some sample game styles */
-#board card[suit=h], #board card[suit=d] {
-  color: red;
-}
-#board card[suit=s], #board card[suit=c] {
-  color: black;
-}
-#board card[suit=h]:after {
-  content: '♥';
-}
-#board card[suit=d]:after {
-  content: '♦';
-}
-#board card[suit=c]:after {
-  content: '♣';
-}
-#board card[suit=s]:after {
-  content: '♠';
-}
-</style>
 </head>
 
 <body>
 <div id="board"></div>
+<div id="questions"></div>
 </body>
