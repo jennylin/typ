@@ -34,19 +34,33 @@
     },
 
     submit: function() {
-      this.game.answer({ id: this.question.id, answer: this.answers });
+      //try {
+        this.game.answer({ id: this.question.id, answer: this.answers });
+/*
+      } catch(err) {
+        console.log(err);
+        this.clearAnswers();
+      }
+*/
       return false;
     },
 
     ask: function(player, question) {
       this.question = question;
-      this.answers = [];
+      this.clearAnswers();
       this.$questions.html(this.questionTemplate({
         player: player.name,
         description: question.description,
       }));
       if (question.multiple) {
         this.$questions.append('<a href="#" id="submit">Done</a>');
+      }
+    },
+
+    clearAnswers: function() {
+      this.answers = [];
+      if (!this.question.continuation) {
+        this.$board.find('.selected').removeClass('selected');
       }
     }
   });

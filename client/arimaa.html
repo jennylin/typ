@@ -1,0 +1,26 @@
+<!doctype html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" href="arimaa.css"/>
+
+<script src="../node_modules/underscore/underscore.js"></script>
+<script src="../node_modules/inflection/lib/inflection.js"></script>
+<script src="bower_components/jquery/jquery.min.js"></script>
+
+<script src="../lib/engine/game.js"></script>
+<script src="../lib/games/arimaa.js"></script>
+<script src="main.js"></script>
+<script>
+  $(function() {
+    client = new GameClient(arimaa, $('#board'), $('#questions'));
+    arimaa.start();
+  });
+</script>
+
+</head>
+
+<body>
+<div id="board"></div>
+<div id="questions"></div>
+</body>
