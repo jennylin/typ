@@ -1,9 +1,10 @@
 (function(window, $) {
   GameClient = window.GameClient = function(game, $board, $questions) {
     this.game = game;
-    this.$board = game.dom = $board;
+    this.$board = $board;
     this.$questions = $questions;
     this.init();
+    this.moveQueue = [];
   };
 
   _.extend(GameClient.prototype, {
@@ -16,6 +17,15 @@
       this.$questions.on('click', '#submit', _.bind(this.submit, this));
     },
 
+    refresh: function(html) {
+      this.queue(function() {
+        this.$board.html(html);
+        this.$board.find('*').each(function() {
+          $(this).prepend($('<span>', { class: 'name' }).html($(this).attr('name') || inflection.humanize(this.tagName)));
+        });
+      });
+    },
+
     $: function() {
       return this.$board.find.apply(this.$board, arguments);
     },
@@ -25,8 +35,41 @@
     },
 
     move: function(from, to, dom) {
-      this.atJsonpath(from).remove();
-      this.atJsonpath(to).append(dom);
+      this.queue(function() {
+        var client = this;
+        var $from = this.atJsonpath(from)
+        , $to = this.atJsonpath(to);
+
+        if ($from.length && $to.length) {
+          $from.css({
+            position: 'absolute',
+            zIndex: 100,
+            left: $from.position().left,
+            top: $from.position().top
+          }).animate({
+            left: $to.offset().left - $from.offset().left,
+            top: $to.offset().top - $from.offset().top
+          }, function() {
+            $from.remove();
+            $to.append(dom);
+            client.runQueue();
+          });
+        } else {
+          $from.remove();
+          $to.append(dom);
+          client.runQueue();
+        }
+      });
+    },
+
+    queue: function(fn) {
+      this.moveQueue.push(fn);
+    },
+
+    runQueue: function() {
+      if (this.moveQueue.length) {
+        this.moveQueue.shift().call(this);
+      }
     },
 
     toggleAnswer: function(e) {
@@ -68,6 +111,7 @@
       if (question.multiple) {
         this.$questions.append('<a href="#" id="submit">Done</a>');
       }
+      this.runQueue();
     },
 
     clearAnswers: function() {

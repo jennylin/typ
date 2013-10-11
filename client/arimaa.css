@@ -17,7 +17,7 @@ piece {
   width: 40px;
   height: 40px;
   display: inline-block;
-  padding: 0 5px 10px;
+  padding: 0 4px 9px 5px;
 }
 piece[name=elephant][player="1"]:after {
   font-size: 40px;
