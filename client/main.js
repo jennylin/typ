@@ -16,6 +16,19 @@
       this.$questions.on('click', '#submit', _.bind(this.submit, this));
     },
 
+    $: function() {
+      return this.$board.find.apply(this.$board, arguments);
+    },
+
+    atJsonpath: function(path) {
+      return this.$('[jsonpath="' + path + '"]');
+    },
+
+    move: function(from, to, dom) {
+      this.atJsonpath(from).remove();
+      this.atJsonpath(to).append(dom);
+    },
+
     toggleAnswer: function(e) {
       var answer = $(e.currentTarget).attr('jsonpath');
       if (_.contains(this.question.options, answer)) {
