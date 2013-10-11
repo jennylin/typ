@@ -1,0 +1,11 @@
+/* placeholder styles for basic elements */
+#board .player, #board .space {
+  display: block;
+  margin-left: 20px;
+}
+#board .piece {
+  display: inline-block;
+  padding: 0 3px;
+  border: 1px solid #666;
+}
+

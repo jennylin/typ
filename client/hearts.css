@@ -1,29 +1,58 @@
-/* placeholder styles for basic elements */
-#board .player, #board .space {
-  display: block;
-  margin-left: 20px;
+#board card {
+  height: 80px;
+  width: 30px;
+  margin: 10px 0;
+  border-right-width: 0;
 }
-#board .space > .name {
-  display: inline-block;
-  width: 120px;
+#board card:last-child {
+  width: 60px;
+  border-right-width: 1px;
 }
-#board .space > .name:after {
-  content: ':';
+#board player {
+  height: 200px;
+  width: 560px;
 }
-#board .piece {
-  display: inline-block;
-  padding: 0 3px;
+#board player[position="1"], #board player[position="3"] {
+  margin: 0 auto;
+  clear: both
 }
-
-/* adjust temporary bootstrap dialog */
-.modal-dialog {
+#board player[position="2"] {
   float: right;
 }
-.modal-backdrop.in {
-  display: none;
+#board player[position="4"] {
+  position: relative;
+  top: -400px;
+}
+#board playing_area[player="1"] {
+  position: relative;
+  left: 245px;
+}
+#board playing_area[player="2"] {
+  position: relative;
+  top: -105px;
+  left: -80px;
+}
+#board playing_area[player="3"] {
+  position: relative;
+  top: -210px;
+  left: 245px;
+}
+#board playing_area[player="4"] {
+  position: relative;
+  top: -105px;
+  left: 80px;
+  text-align: right;
+}
+#board tricks_area {
+  height: 0px;
 }
 
-/* some sample game styles */
+#board card {
+  text-align: left;
+}
+#board card.facedown {
+  background: #ccf;
+}
 #board card[suit=h], #board card[suit=d] {
   color: red;
 }
@@ -42,7 +71,11 @@
 #board card[suit=s]:after {
   content: '♠';
 }
-
 #board card.selected {
   background: #ff9;
+}
+#questions {
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }

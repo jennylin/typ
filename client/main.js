@@ -3,8 +3,8 @@
     this.game = game;
     this.$board = $board;
     this.$questions = $questions;
-    this.init();
     this.moveQueue = [];
+    this.init();
   };
 
   _.extend(GameClient.prototype, {
@@ -18,11 +18,11 @@
     },
 
     refresh: function(html) {
+      if (this.transform) {
+        html = this.transform.call(this, html);
+      }
       this.queue(function() {
         this.$board.html(html);
-        this.$board.find('*').each(function() {
-          $(this).prepend($('<span>', { class: 'name' }).html($(this).attr('name') || inflection.humanize(this.tagName)));
-        });
       });
     },
 
@@ -35,6 +35,9 @@
     },
 
     move: function(from, to, dom) {
+      if (this.transform) {
+        dom = this.transform.call(this, dom);
+      }
       this.queue(function() {
         var client = this;
         var $from = this.atJsonpath(from)
@@ -47,9 +50,9 @@
             left: $from.position().left,
             top: $from.position().top
           }).animate({
-            left: $to.offset().left - $from.offset().left,
-            top: $to.offset().top - $from.offset().top
-          }, function() {
+            left: $from.position().left + $to.offset().left - $from.offset().left,
+            top: $from.position().top + $to.offset().top - $from.offset().top
+          }, 100, function() {
             $from.remove();
             $to.append(dom);
             client.runQueue();
