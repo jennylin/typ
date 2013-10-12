@@ -42,10 +42,9 @@
 }
 #board tricksArea card.piece {
   zoom: 40%;
-  display: none;
 }
-#board tricksArea card.piece:nth-child(4n+0) {
-  display: inline-block;
+#board tricksArea card.piece:nth-child(4n+1), #board tricksArea card.piece:nth-child(4n+2), #board tricksArea card.piece:nth-child(4n+3) {
+  display: none;
 }
 
 #board passingArea, #board playingArea {
@@ -69,6 +68,7 @@
 }
 
 #board card {
+  position: relative;
   background: white;
   width: 60px;
   height: 80px;
@@ -83,6 +83,14 @@
   margin: 0;
   display: block;
   margin-top: -58px;
+}
+#board *[player="1"] card.selected, #board *[player="3"] card.selected {
+  top: -5px;
+  transition: 100ms;
+}
+#board *[player="2"] card.selected, #board *[player="4"] card.selected {
+  left: 5px;
+  transition: 100ms;
 }
 
 #board card:not([name]) {
@@ -109,9 +117,6 @@
 }
 #board card[suit=s]:after {
   content: '♠';
-}
-#board card.selected {
-  background: #ff9;
 }
 #questions {
   position: absolute;
