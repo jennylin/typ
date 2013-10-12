@@ -1,29 +1,35 @@
+board {
+  position: absolute;
+  left: 50px;
+  top: 50px;
+  width: 400px;
+  height: 400px;
+  background: url(images/BoardStoneSmall.jpg);
+  background-size: cover;
+}
+
 square {
   position: absolute;
-  border: 1px solid #666;
-  width: 49px;
-  height: 49px;
+  width: 50px;
+  height: 50px;
 }
-square[trap=true] {
-  background: #ccc;
-}
-square[row="1"] { top: 100px; }
-square[row="2"] { top: 150px; }
-square[row="3"] { top: 200px; }
-square[row="4"] { top: 250px; }
-square[row="5"] { top: 300px; }
-square[row="6"] { top: 350px; }
-square[row="7"] { top: 400px; }
-square[row="8"] { top: 450px; }
+square[row="1"] { top: 0px; }
+square[row="2"] { top: 50px; }
+square[row="3"] { top: 100px; }
+square[row="4"] { top: 150px; }
+square[row="5"] { top: 200px; }
+square[row="6"] { top: 250px; }
+square[row="7"] { top: 300px; }
+square[row="8"] { top: 350px; }
 
-square[column="1"] { left: 50px; }
-square[column="2"] { left: 100px; }
-square[column="3"] { left: 150px; }
-square[column="4"] { left: 200px; }
-square[column="5"] { left: 250px; }
-square[column="6"] { left: 300px; }
-square[column="7"] { left: 350px; }
-square[column="8"] { left: 400px; }
+square[column="1"] { left: 0px; }
+square[column="2"] { left: 50px; }
+square[column="3"] { left: 100px; }
+square[column="4"] { left: 150px; }
+square[column="5"] { left: 200px; }
+square[column="6"] { left: 250px; }
+square[column="7"] { left: 300px; }
+square[column="8"] { left: 350px; }
 
 piece {
   width: 40px;
@@ -32,18 +38,66 @@ piece {
   line-height: 45px;
   text-align: center;
   padding: 0 4px 9px 5px;
+  background-size: 90%;
+  background-repeat: no-repeat;
+  background-position: 3px 3px;
 }
+piece[name=elephant][player="1"] {
+  background-image: url('images/GoldElephant.png');
+}
+piece[name=camel][player="1"] {
+  background-image: url('images/GoldCamel.png');
+}
+piece[name=horse][player="1"] {
+  background-image: url('images/GoldHorse.png');
+}
+piece[name=dog][player="1"] {
+  background-image: url('images/GoldDog.png');
+}
+piece[name=cat][player="1"] {
+  background-image: url('images/GoldCat.png');
+}
+piece[name=rabbit][player="1"] {
+  background-image: url('images/GoldRabbit.png');
+}
+piece[name=elephant][player="2"] {
+  background-image: url('images/SilverElephant.png');
+}
+piece[name=camel][player="2"] {
+  background-image: url('images/SilverCamel.png');
+}
+piece[name=horse][player="2"] {
+  background-image: url('images/SilverHorse.png');
+}
+piece[name=dog][player="2"] {
+  background-image: url('images/SilverDog.png');
+}
+piece[name=cat][player="2"] {
+  background-image: url('images/SilverCat.png');
+}
+piece[name=rabbit][player="2"] {
+  background-image: url('images/SilverRabbit.png');
+}
+
 piece.selected {
-  font-size: 48px;
-  margin-left: -4px;
+  background-position: 0 0;
+  background-size: 100%;
   transition: 100ms;
 }
-hand {
+hand[player="1"] {
+  position: absolute;
+  top: -30px;
+}
+hand[player="2"] {
+  position: absolute;
+  top: 400px;
+}
+hand piece {
   zoom: 50%;
 }
 
 #questions {
   position: absolute;
   left: 480px;
-  top: 85px;
+  top: 35px;
 }
