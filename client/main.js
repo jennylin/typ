@@ -66,7 +66,6 @@
         if ($from.length && $to.length) {
           $from.css({
             position: 'absolute',
-            zIndex: 100,
             left: $from.position().left,
             top: $from.position().top
           })

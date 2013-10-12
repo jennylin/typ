@@ -1,9 +1,11 @@
 /* placeholder styles for basic elements */
 .player, .space {
   display: block;
+  z-index: 0;
 }
 .piece {
   display: inline-block;
-  padding: 0 3px;
 }
-
+.game-moving {
+  z-index: 100;
+}

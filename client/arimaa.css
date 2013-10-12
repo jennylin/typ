@@ -1,73 +1,12 @@
-#board .player, #board .space {
-  display: block;
-  margin-left: 20px;
-}
-#board square {
+square {
   position: absolute;
   border: 1px solid #666;
   width: 49px;
   height: 49px;
-  font-size: 0;
 }
 square[trap=true] {
   background: #ccc;
 }
-piece {
-  font-size: 0;
-  width: 40px;
-  height: 40px;
-  display: inline-block;
-  padding: 0 4px 9px 5px;
-}
-piece[name=elephant][player="1"]:after {
-  font-size: 40px;
-  content: '♔';
-}
-piece[name=elephant][player="2"]:after {
-  font-size: 40px;
-  content: '♚';
-}
-piece[name=camel][player="1"]:after {
-  font-size: 40px;
-  content: '♕';
-}
-piece[name=camel][player="2"]:after {
-  font-size: 40px;
-  content: '♛';
-}
-piece[name=horse][player="1"]:after {
-  font-size: 40px;
-  content: '♖';
-}
-piece[name=horse][player="2"]:after {
-  font-size: 40px;
-  content: '♜';
-}
-piece[name=dog][player="1"]:after {
-  font-size: 40px;
-  content: '♗';
-}
-piece[name=dog][player="2"]:after {
-  font-size: 40px;
-  content: '♝';
-}
-piece[name=cat][player="1"]:after {
-  font-size: 40px;
-  content: '♘';
-}
-piece[name=cat][player="2"]:after {
-  font-size: 40px;
-  content: '♞';
-}
-piece[name=rabbit][player="1"]:after {
-  font-size: 40px;
-  content: '♙';
-}
-piece[name=rabbit][player="2"]:after {
-  font-size: 40px;
-  content: '♟';
-}
-
 square[row="1"] { top: 100px; }
 square[row="2"] { top: 150px; }
 square[row="3"] { top: 200px; }
@@ -86,6 +25,25 @@ square[column="6"] { left: 300px; }
 square[column="7"] { left: 350px; }
 square[column="8"] { left: 400px; }
 
-.selected {
-  background: #ff9;
+piece {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
+  line-height: 45px;
+  text-align: center;
+  padding: 0 4px 9px 5px;
+}
+piece.selected {
+  font-size: 48px;
+  margin-left: -4px;
+  transition: 100ms;
+}
+hand {
+  zoom: 50%;
+}
+
+#questions {
+  position: absolute;
+  left: 480px;
+  top: 85px;
 }

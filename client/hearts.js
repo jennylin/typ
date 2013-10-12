@@ -5,5 +5,6 @@ $(function() {
       return  $.attr('name') ? $.attr('name')[0] : '';
     }
   };
+
   client.game.start();
 });
