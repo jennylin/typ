@@ -18,8 +18,12 @@
     },
 
     refresh: function(html) {
-      if (this.transform) {
-        html = this.transform.call(this, html);
+      if (this.display) {
+        _.each(this.display, function(fn, rule) {
+          html.find(rule).each(function() {
+            $(this).html(fn.call(this, $(this)));
+          });
+        });
       }
       this.queue(function() {
         this.$board.html(html);
@@ -30,34 +34,53 @@
       return this.$board.find.apply(this.$board, arguments);
     },
 
+    /*
     atJsonpath: function(path) {
       return this.$('[jsonpath="' + path + '"]');
     },
+    */
+
+    atJsonpath: function(path) {
+      return this.$(path
+                    .replace('$.', 'board > ')
+                    .replace(/\./g, ' > ')
+                    .replace(/\[(\d+)\]/g, function(match, n) { return ':nth-of-type(' + (1+parseInt(n, 10)) + ')'; })
+                   );
+    },
 
     move: function(from, to, dom) {
-      if (this.transform) {
-        dom = this.transform.call(this, dom);
+      $dom = $('<div>').html(dom);
+      if (this.display) {
+        _.each(this.display, function(fn, rule) {
+          $dom.find(rule).each(function() {
+            $(this).html(fn.call(this, $(this)));
+          });
+        });
       }
+      dom = $dom.html();
+
       this.queue(function() {
         var client = this;
         var $from = this.atJsonpath(from)
         , $to = this.atJsonpath(to);
-
         if ($from.length && $to.length) {
           $from.css({
             position: 'absolute',
             zIndex: 100,
             left: $from.position().left,
             top: $from.position().top
-          }).animate({
-            left: $from.position().left + $to.offset().left - $from.offset().left,
-            top: $from.position().top + $to.offset().top - $from.offset().top
-          }, 100, function() {
-            $from.remove();
-            $to.append(dom);
-            client.runQueue();
-          });
+          })
+            .addClass('game-moving')
+            .animate({
+              left: $from.position().left + $to.offset().left - $from.offset().left,
+              top: $from.position().top + $to.offset().top - $from.offset().top
+            }, 200, function() {
+              $from.remove();
+              $to.append(dom);
+              client.runQueue();
+            });
         } else {
+          console.log('could not move');
           $from.remove();
           $to.append(dom);
           client.runQueue();

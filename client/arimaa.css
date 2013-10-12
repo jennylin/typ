@@ -68,14 +68,14 @@ piece[name=rabbit][player="2"]:after {
   content: '♟';
 }
 
-square[row="1"] { top: 200px; }
-square[row="2"] { top: 250px; }
-square[row="3"] { top: 300px; }
-square[row="4"] { top: 350px; }
-square[row="5"] { top: 400px; }
-square[row="6"] { top: 450px; }
-square[row="7"] { top: 500px; }
-square[row="8"] { top: 550px; }
+square[row="1"] { top: 100px; }
+square[row="2"] { top: 150px; }
+square[row="3"] { top: 200px; }
+square[row="4"] { top: 250px; }
+square[row="5"] { top: 300px; }
+square[row="6"] { top: 350px; }
+square[row="7"] { top: 400px; }
+square[row="8"] { top: 450px; }
 
 square[column="1"] { left: 50px; }
 square[column="2"] { left: 100px; }

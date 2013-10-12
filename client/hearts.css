@@ -1,57 +1,95 @@
-#board card {
-  height: 80px;
-  width: 30px;
-  margin: 10px 0;
-  border-right-width: 0;
-}
-#board card:last-child {
-  width: 60px;
-  border-right-width: 1px;
+#board .player, #board .space {
+  margin: 0;
 }
 #board player {
-  height: 200px;
-  width: 560px;
+  position: absolute;
 }
-#board player[position="1"], #board player[position="3"] {
-  margin: 0 auto;
-  clear: both
+#board player[position="1"] {
+  left: 210px;
+  top: 20px;
 }
-#board player[position="2"] {
-  float: right;
+#board player[position="2"] { 
+  left: 740px;
+  top: 174px;
+}
+#board player[position="3"] {
+  left: 210px;
+  top: 500px;
 }
 #board player[position="4"] {
-  position: relative;
-  top: -400px;
+  left: 20px;
+  top: 174px;
 }
-#board playing_area[player="1"] {
-  position: relative;
-  left: 245px;
+
+#board tricksArea {
+  position: absolute;
 }
-#board playing_area[player="2"] {
-  position: relative;
-  top: -105px;
-  left: -80px;
+#board tricksArea[player="1"] {
+  left: -20px;
+  top: 90px;
 }
-#board playing_area[player="3"] {
-  position: relative;
-  top: -210px;
-  left: 245px;
+#board tricksArea[player="2"] {
+  left: -40px;
+  top: -40px;
 }
-#board playing_area[player="4"] {
-  position: relative;
-  top: -105px;
+#board tricksArea[player="3"] {
+  left: -20px;
+  top: -42px;
+}
+#board tricksArea[player="4"] {
   left: 80px;
-  text-align: right;
+  top: -40px;
 }
-#board tricks_area {
-  height: 0px;
+#board tricksArea card.piece {
+  zoom: 40%;
+  display: none;
+}
+#board tricksArea card.piece:nth-child(4n+0) {
+  display: inline-block;
+}
+
+#board passingArea, #board playingArea {
+  position: absolute;
+}
+#board passingArea[player="1"], #board playingArea[player="1"] {
+  left: 50%;
+  top: 100px;
+}
+#board passingArea[player="2"], #board playingArea[player="2"] {
+  left: -80px;
+  top: 50%;
+}
+#board passingArea[player="3"], #board playingArea[player="3"] {
+  left: 50%;
+  top: -100px;
+}
+#board passingArea[player="4"], #board playingArea[player="4"] {
+  left: 80px;
+  top: 50%;
 }
 
 #board card {
-  text-align: left;
+  background: white;
+  width: 60px;
+  height: 80px;
+  border: 1px solid #666;
+  border-radius: 4px;
 }
-#board card.facedown {
+#board *[player="1"] card, #board *[player="3"] card {
+  margin-left: -34px;
+}
+#board *[player="2"] card, #board *[player="4"] card {
+  margin: 0;
+  display: block;
+  margin-top: -58px;
+}
+
+#board card:not([name]) {
   background: #ccf;
+}
+#board card.game-moving {
+  -moz-transform: rotate(10deg);
+  -webkit-transform: rotate(10deg);
 }
 #board card[suit=h], #board card[suit=d] {
   color: red;
@@ -76,6 +114,6 @@
 }
 #questions {
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 230px;
+  left: 280px;
 }
