@@ -51,28 +51,28 @@
   position: absolute;
 }
 #board passingArea[player="1"], #board playingArea[player="1"] {
-  left: 50%;
+  left: 195px;
   top: 100px;
 }
 #board passingArea[player="2"], #board playingArea[player="2"] {
   left: -80px;
-  top: 50%;
+  top: 145px;
 }
 #board passingArea[player="3"], #board playingArea[player="3"] {
-  left: 50%;
+  left: 195px;
   top: -100px;
 }
 #board passingArea[player="4"], #board playingArea[player="4"] {
   left: 80px;
-  top: 50%;
+  top: 145px;
 }
 
 #board card {
   position: relative;
-  background: white;
+  background: #eec;
   width: 60px;
   height: 80px;
-  border: 1px solid #666;
+  border: 1px solid #886;
   border-radius: 4px;
   padding: 0 2px;
 }
