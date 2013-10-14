@@ -6,33 +6,48 @@ board {
 
 .space {
   position: absolute;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  display: block;
+  margin: -30px 0 0 -30px;
+  padding: 10px 0;
 }
 
-.space[y="-11"] { top: 0px; }
+point.space {
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+}
+edge.space {
+  width: 30px;
+  height: 30px;
+  margin: -15px 0 0 -15px;
+}
+
+.space[y="-11"] { top: 10px; }
 .space[y="-10"] { top: 20px; }
-.space[y="-9"] { top: 40px; }
+.space[y="-9"] { top: 30px; }
 .space[y="-8"] { top: 60px; }
-.space[y="-7"] { top: 80px; }
+.space[y="-7"] { top: 90px; }
 .space[y="-6"] { top: 100px; }
-.space[y="-5"] { top: 120px; }
+.space[y="-5"] { top: 110px; }
 .space[y="-4"] { top: 140px; }
-.space[y="-3"] { top: 160px; }
+.space[y="-3"] { top: 170px; }
 .space[y="-2"] { top: 180px; }
-.space[y="-1"] { top: 200px; }
+.space[y="-1"] { top: 190px; }
 .space[y="0"] { top: 220px; }
-.space[y="1"] { top: 240px; }
+.space[y="1"] { top: 250px; }
 .space[y="2"] { top: 260px; }
-.space[y="3"] { top: 280px; }
+.space[y="3"] { top: 270px; }
 .space[y="4"] { top: 300px; }
-.space[y="5"] { top: 320px; }
+.space[y="5"] { top: 330px; }
 .space[y="6"] { top: 340px; }
-.space[y="7"] { top: 360px; }
+.space[y="7"] { top: 350px; }
 .space[y="8"] { top: 380px; }
-.space[y="9"] { top: 400px; }
+.space[y="9"] { top: 410px; }
 .space[y="10"] { top: 420px; }
-.space[y="11"] { top: 440px; }
+.space[y="11"] { top: 430px; }
 
 .space[x="-11"] { left: 0px; }
 .space[x="-10"] { left: 20px; }

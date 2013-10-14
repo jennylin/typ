@@ -107,8 +107,10 @@
     },
 
     toggleAnswer: function(e) {
-      var answer = $(e.currentTarget).attr('jsonpath');
-      if (_.contains(this.question.options, answer)) {
+      var answer = _.find(this.question.choices, function(choice) {
+        return choice.jsonpath==$(e.currentTarget).attr('jsonpath');
+      });
+      if (answer) {
         e.stopPropagation();
         if (_.contains(this.answers, answer)) {
           $(e.currentTarget).removeClass('selected');
