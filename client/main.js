@@ -3,7 +3,8 @@
     this.game = game;
     this.$board = $board;
     this.$questions = $questions;
-    this.moveQueue = [];
+    this.queued = [];
+    this.player = null;
     this.init();
   };
 
@@ -17,7 +18,8 @@
       this.$questions.on('click', '#submit', _.bind(this.submit, this));
     },
 
-    refresh: function(html) {
+    refresh: function() {
+      var html = this.game.dom(this.player);
       if (this.display) {
         _.each(this.display, function(fn, rule) {
           html.find(rule).each(function() {
@@ -25,8 +27,9 @@
           });
         });
       }
-      this.queue(function() {
+      this.updateUI(function() {
         this.$board.html(html);
+        this.releaseUI();
       });
     },
 
@@ -59,9 +62,9 @@
       }
       dom = $dom.html();
 
-      this.queue(function() {
-        var client = this;
-        var $from = this.atJsonpath(from)
+      this.updateUI(function() {
+        var client = this
+        , $from = this.atJsonpath(from)
         , $to = this.atJsonpath(to);
         if ($from.length && $to.length) {
           $from.css({
@@ -76,24 +79,30 @@
             }, 200, function() {
               $from.remove();
               $to.append(dom);
-              client.runQueue();
+              client.releaseUI();
             });
         } else {
-          console.log('could not move');
           $from.remove();
           $to.append(dom);
-          client.runQueue();
+          client.releaseUI();
         }
       });
     },
 
-    queue: function(fn) {
-      this.moveQueue.push(fn);
+    updateUI: function(fn) {
+      this.queued.push(fn);
+    },
+
+    releaseUI: function() {
+      return this.queueRunning && this.runQueue();
     },
 
     runQueue: function() {
-      if (this.moveQueue.length) {
-        this.moveQueue.shift().call(this);
+      if (this.queued.length) {
+        this.queueRunning = true;
+        this.queued.shift().call(this);
+      } else {
+        this.queueRunning = false;
       }
     },
 
@@ -115,6 +124,7 @@
     },
 
     submit: function() {
+      // errors in answer bubble up here? commented while building for bug-catching
       //try {
         this.game.answer({ id: this.question.id, answer: this.answers });
 /*
@@ -135,6 +145,10 @@
       }));
       if (question.multiple) {
         this.$questions.append('<a href="#" id="submit">Done</a>');
+      }
+      if (this.player!=player) {
+        this.player = player;
+        this.refresh();
       }
       this.runQueue();
     },
