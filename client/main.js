@@ -66,26 +66,29 @@
         var client = this
         , $from = this.atJsonpath(from)
         , $to = this.atJsonpath(to);
-        if ($from.length && $to.length) {
+        if (!$from.length) {
+          $from = $(dom).css({
+            position: 'absolute',
+            left: '50%',
+            top: -$from.height()
+          }).appendTo(this.$board);
+        } else {
           $from.css({
             position: 'absolute',
             left: $from.position().left,
             top: $from.position().top
-          })
-            .addClass('game-moving')
-            .animate({
-              left: $from.position().left + $to.offset().left - $from.offset().left,
-              top: $from.position().top + $to.offset().top - $from.offset().top
-            }, 200, function() {
-              $from.remove();
-              $to.append(dom);
-              client.releaseUI();
-            });
-        } else {
-          $from.remove();
-          $to.append(dom);
-          client.releaseUI();
+          });
         }
+        $from
+          .addClass('game-moving')
+          .animate({
+            left: $from.position().left + $to.offset().left - $from.offset().left,
+            top: $from.position().top + $to.offset().top - $from.offset().top
+          }, 200, function() {
+            $from.remove();
+            $to.append(dom);
+            client.releaseUI();
+          });
       });
     },
 
@@ -103,13 +106,20 @@
         this.queued.shift().call(this);
       } else {
         this.queueRunning = false;
+        if (this.hilite && this.hilite[this.question.name]) {
+          _.each(this.question.choices, function(choice) {
+            this.atJsonpath(choice.jsonpath).addClass(this.hilite[this.question.name]);
+          }, this);
+        }
       }
     },
 
     toggleAnswer: function(e) {
+      console.log($(e.currentTarget));
       var answer = _.find(this.question.choices, function(choice) {
         return choice.jsonpath==$(e.currentTarget).attr('jsonpath');
       });
+
       if (answer) {
         e.stopPropagation();
         if (_.contains(this.answers, answer)) {
@@ -122,10 +132,17 @@
             this.submit();
           }
         }
+      } else {
+        console.log('continue');
       }
     },
 
     submit: function() {
+      if (this.hilite && this.hilite[this.question.name]) {
+        _.each(this.question.choices, function(choice) {
+          this.atJsonpath(choice.jsonpath).removeClass(this.hilite[question.name]);
+        }, this);
+      }
       // errors in answer bubble up here? commented while building for bug-catching
       //try {
         this.game.answer({ id: this.question.id, answer: this.answers });
@@ -157,9 +174,13 @@
 
     clearAnswers: function() {
       this.answers = [];
-      if (!this.question.continuation) {
+      if (this.question.segment!='to') {
         this.$board.find('.selected').removeClass('selected');
       }
+    },
+
+    announce: function(msg) {
+      this.$questions.html(msg);
     }
   });
 }(window, jQuery));

@@ -1,4 +1,13 @@
 /* placeholder styles for basic elements */
+body {
+  padding: 0;
+  margin: 0;
+}
+board {
+  width: 90%;
+  height: 90%;
+  padding: 5%;
+}
 .player, .space {
   display: block;
   z-index: 0;

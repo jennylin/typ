@@ -1,0 +1,40 @@
+*moves*
+
+board move = player move :
+move = {
+  choices: piece obj/space obj/string
+  to:
+}
+player.must('move')
+
+player move of various board moves
+
+move1 = {}
+move2 = {}
+player.must([ 'move1', 'move2' ])
+
+compound board moves
+
+move1 = {}
+move2 = {}
+combo = {
+  moves: [move1, move2]
+}
+
+combinations with conditions
+
+move = {
+  requirements: function
+  pieces:
+  to:
+}
+move1 = {}
+move2 = {}
+combo = {
+  selection: piece obj/space obj/string
+  requirements: function
+  moves: [move1, move2]
+}
+
+player.must([ 'move', 'combo' ])
+

@@ -1,5 +1,6 @@
 $(function() {
   client = new GameClient(catan, $('#board'), $('#questions'));
+
   client.display = {
     space: function($) {
       return  $.attr('resource') + ($.attr('roll') ? '<br>' + $.attr('roll') : '');
@@ -15,8 +16,16 @@ $(function() {
     },
     road: function($) {
       return '|';
+    },
+    resource: function($) {
+      return this.name;
     }
   };
+
+  client.hilite = {
+    'placeSettlement.to': 'hilite',
+    'placeRoad.to': 'hilite'
+  }
 
   client.game.start();
 });

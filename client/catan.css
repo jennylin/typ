@@ -1,7 +1,5 @@
 board {
   position: absolute;
-  left: 50px;
-  top: 50px;
 }
 
 .space {
@@ -23,6 +21,10 @@ edge.space {
   width: 30px;
   height: 30px;
   margin: -15px 0 0 -15px;
+}
+
+.hilite {
+  background: #ffc;
 }
 
 .space[y="-11"] { top: 10px; }
@@ -72,3 +74,22 @@ edge.space {
 .space[x="9"] { left: 400px; }
 .space[x="10"] { left: 420px; }
 .space[x="11"] { left: 440px; }
+
+resource {
+  position: relative;
+  background: #eec;
+  width: 60px;
+  height: 80px;
+  border: 1px solid #886;
+  border-radius: 4px;
+  padding: 0 2px;
+  margin-left: -34px;
+}
+
+player {
+  float: right;
+}
+
+hand {
+  height: 100px;
+}

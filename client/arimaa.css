@@ -6,6 +6,7 @@ board {
   height: 400px;
   background: url(images/BoardStoneSmall.jpg);
   background-size: cover;
+  padding: 0;
 }
 
 square {
@@ -94,6 +95,7 @@ hand[player="2"] {
 }
 hand piece {
   zoom: 50%;
+  -moz-transform: scale(.5)
 }
 
 #questions {
